@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 
 include __DIR__ . '/../vendor/autoload.php';
+error_reporting( E_ALL ^ E_DEPRECATED );
 
 $app = new App([
     'settings'                 => [
