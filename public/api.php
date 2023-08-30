@@ -7,14 +7,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 
 include __DIR__ . '/../vendor/autoload.php';
-error_reporting( E_ALL ^ E_DEPRECATED );
+error_reporting( E_ERROR );
 
 $app = new App([
     // Add the resource server to the DI container
     ResourceServer::class => function () {
         $server = new ResourceServer(
             new AccessTokenRepository(),            // instance of AccessTokenRepositoryInterface
-            'file://' . __DIR__ . '/../public.key'  // the authorization server's public key
+            'file://' . __DIR__ . '/../key/public.key'  // the authorization server's public key
         );
 
         return $server;
@@ -67,6 +67,21 @@ $app->get(
         }
 
         $response->getBody()->write(\json_encode($users));
+
+        return $response->withStatus(200);
+    }
+);
+
+$app->get(
+    '/userDetails',
+    function (ServerRequestInterface $request, ResponseInterface $response) use ($app) {
+        $user = [
+            'id'    => 123,
+            'name'  => 'Alex',
+            'email' => 'alex@thephpleague.com',
+        ];
+
+        $response->getBody()->write(\json_encode($user));
 
         return $response->withStatus(200);
     }

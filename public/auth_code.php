@@ -22,7 +22,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 
 include __DIR__ . '/../vendor/autoload.php';
-error_reporting( E_ALL ^ E_DEPRECATED );
+error_reporting( E_ERROR );
 
 $app = new App([
     'settings'    => [
